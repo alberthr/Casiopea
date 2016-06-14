@@ -1,5 +1,6 @@
 ## ui.R ##
 library(shinydashboard)
+library(shinyjs)
 
 dashboardPage(skin = "red",
   dashboardHeader(title = "CASIOPEA"),
@@ -19,37 +20,63 @@ dashboardPage(skin = "red",
       # TAB MAPA DE CORRESPONDENCIAS
       tabItem(tabName = "tabCorrespondencias",
               fluidRow(
-                box(width = 3,
-                    title = "Carga de datos", 
-                    status = "primary", 
-                    solidHeader = TRUE,
-                    collapsible = FALSE,
-                    fileInput('file1', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
+                column(width = 3,
+                       box(
+                         title = "Carga de datos", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = TRUE,
+                         collapsed = FALSE,
+                         fileInput('file1', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
+                       ),
+                       
+                       box(
+                         title = "Elementos Principales", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = TRUE,
+                         collapsed = TRUE,
+                         selectInput("tema", label = NULL, choices = list("Tema Gris" = 1, "Tema Claro" = 2, "Solo Grafico en Blanco" = 3), selected = 1),
+                         selectInput("bolatexto", label = NULL, choices = list("Mostrar Bolas y Etiquetas" = 1, "Mostrar Solo Etiquetas" = 2, "Mostrar Solo Bolas" = 3), selected = 1)
+                       ),
+                       
+                       box(
+                         title = "Tamaños", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = TRUE,
+                         collapsed = TRUE,
+                         sliderInput("tm_texto", label ="Etiquetas", min = 10, max = 100, value = 40),
+                         sliderInput("tm_bola", label ="Bolas", min = 10, max = 100, value = 20)
+                       ),
+                       
+                       box(
+                         title = "Colores", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = TRUE,
+                         collapsed = TRUE,
+                         colourInput("col1", "Colores", value = "#D11919", showColour = "background"),
+                         colourInput("col2", label=NULL, value = "#676767", showColour = "background")
+                       )
                 ),
                 
-                box(width = 9,
-                    title = "Mapa de Correspondencias", 
-                    status = "primary", 
-                    solidHeader = TRUE,
-                    collapsible = FALSE,
-                    plotOutput("correspondencias", height = 600)
+                column(width = 9,
+                       box(
+                         title = "Mapa de Correspondencias", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = FALSE,
+                         plotOutput("correspondencias", height = 500)
+                       )
                 )
               )
-      ),
-
-      # TAB PERFIL SOCIODEMOGRAFICOS
-      tabItem(tabName = "medios",
-              fluidRow(
-                box(width = 12,
-                    title = "Histogram", 
-                    status = "primary", 
-                    solidHeader = TRUE,
-                    collapsible = FALSE,
-                    plotOutput("sociodemografico", height = 600))
-              )
       )
-      
-      
     )
   )
 )

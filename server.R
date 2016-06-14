@@ -42,21 +42,30 @@ function(input, output) {
     porcx <- round(acor$eig[1,2],2)
     porcy <- round(acor$eig[2,2],2)
     
-    ggplot(grafico, aes(x, y, label=row.names(grafico))) +
+    mapacor <- ggplot(grafico, aes(x, y, label=row.names(grafico))) +
       geom_hline(yintercept=0, color="darkgrey") +
       geom_vline(xintercept=0, color="darkgrey") +
-      geom_point(size=1.75, colour="#777777") +
-      guides(alpha=FALSE) + 
-      scale_colour_manual(values=c("#D11919","black")) +
-      geom_label_repel(size=4, aes(colour = dimension)) +
       ggtitle("Mapa de Correspondencias") +  
       ylab(paste0("Contribucion Dimension 2: ",porcy,"%")) +
-      xlab(paste0("Contribucion Dimension 1: ",porcx,"%")) +
+      xlab(paste0("Contribucion Dimension 1: ",porcx,"%"))
+    
+    if (input$tema == 1) {mapacor <- mapacor + theme_gray()}
+    if (input$tema == 2) {mapacor <- mapacor + theme_bw()}
+    if (input$tema == 3) {mapacor <- mapacor + theme_void()}
+    
+    if (input$bolatexto == 1 | input$bolatexto == 3) {mapacor <- mapacor + geom_point(size=(input$tm_bola)/10, colour="#777777", alpha=0.5)}
+    if (input$bolatexto == 1 | input$bolatexto == 2) {mapacor <- mapacor + scale_colour_manual(values=c(input$col1, input$col2)) +
+      geom_label_repel(size=(input$tm_texto)/10, aes(colour = dimension))}
+        
+    mapacor <- mapacor + 
       theme(axis.text.x = element_blank()) + 
       theme(axis.text.y = element_blank()) +
       theme(axis.ticks.x = element_blank()) +
-      theme(axis.ticks.y = element_blank())
+      theme(axis.ticks.y = element_blank()) +
+      theme(legend.position="none")
     
+    print(mapacor)
+
   })
     
 }
