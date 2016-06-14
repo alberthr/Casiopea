@@ -54,6 +54,18 @@ dashboardPage(skin = "red",
                        ),
                        
                        box(
+                         title = "Etiquetas", 
+                         width = NULL,
+                         status = "primary", 
+                         solidHeader = TRUE,
+                         collapsible = TRUE,
+                         collapsed = TRUE,
+                         checkboxInput("lineabt", label = "Linea Bola-Texto", value = TRUE),
+                         checkboxInput("enetiqueta", label = "Envolver Texto", value = FALSE),
+                         sliderInput("separacion", label ="Fuerza de Separacion", min = 0, max = 100, value = 25)
+                       ),
+                       
+                       box(
                          title = "Colores", 
                          width = NULL,
                          status = "primary", 
