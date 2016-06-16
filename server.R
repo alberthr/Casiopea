@@ -79,7 +79,6 @@ function(input, output) {
       theme(legend.position="none") +
       theme(aspect.ratio=2.5/input$aspecto) 
     
-    
     print(mapacor)
 
   })

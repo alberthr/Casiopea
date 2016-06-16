@@ -2,7 +2,7 @@
 library(shinydashboard)
 library(shinyjs)
 
-dashboardPage(skin = "red",
+dashboardPage(#skin = "red",
   dashboardHeader(title = "CASIOPEA"),
   
   ## Sidebar content
@@ -24,7 +24,7 @@ dashboardPage(skin = "red",
                        box(
                          title = "Carga de datos", 
                          width = NULL,
-                         color="black", 
+                         status = "primary", 
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = FALSE,
@@ -34,7 +34,7 @@ dashboardPage(skin = "red",
                        box(
                          title = "Elementos Principales", 
                          width = NULL,
-                         color="black", 
+                         status = "primary", 
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
@@ -47,7 +47,7 @@ dashboardPage(skin = "red",
                        box(
                          title = "Tamaños", 
                          width = NULL,
-                         color="black", 
+                         status = "primary", 
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
@@ -58,7 +58,7 @@ dashboardPage(skin = "red",
                        box(
                          title = "Etiquetas", 
                          width = NULL,
-                         color="black", 
+                         status = "primary", 
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
@@ -72,7 +72,6 @@ dashboardPage(skin = "red",
                          title = "Colores", 
                          width = NULL,
                          status = "primary",
-                         color="black", 
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
@@ -88,7 +87,7 @@ dashboardPage(skin = "red",
                          status = "primary", 
                          solidHeader = TRUE,
                          collapsible = FALSE,
-                         plotOutput("correspondencias", height=550)
+                         plotOutput("correspondencias", height=500)
                        )
                 )
               )
