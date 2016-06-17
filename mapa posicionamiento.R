@@ -2,6 +2,7 @@ library(FactoMineR)
 library(ggplot2)
 library(ggrepel)
 library(readxl)
+library(xlsx)
 
 datos <- as.data.frame(read_excel("ejemplo CA.xlsx", 1))
 rownames(datos) <- datos[,1]
@@ -28,9 +29,10 @@ ggplot(grafico, aes(x, y, label=row.names(grafico))) +
   ggtitle("Mapa de Correspondencias") +  
   ylab(paste0("Contribucion: ",porcy,"%")) +
   xlab(paste0("Contribucion: ",porcx,"%")) +
-  theme_void() +
   theme(axis.text.x = element_blank()) + 
   theme(axis.text.y = element_blank()) +
   theme(axis.ticks.x = element_blank()) +
-  theme(axis.ticks.y = element_blank())
+  theme(axis.ticks.y = element_blank()) +
+  theme(axis.title.x = element_text(colour="red",size=12,angle=0,hjust=.5,vjust=0,face="plain"),
+        axis.title.y = element_text(colour="green",size=18,angle=90,hjust=.5,vjust=.5,face="plain"))
 

@@ -16,7 +16,6 @@ dashboardPage(#skin = "red",
   dashboardBody(
     tabItems(
 
-
       # TAB MAPA DE CORRESPONDENCIAS
       tabItem(tabName = "tabCorrespondencias",
               fluidRow(
@@ -38,10 +37,10 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
-                         selectInput("tema", label = NULL, choices = list("Tema Gris" = 1, "Tema Claro" = 2, "Solo Grafico en Blanco" = 3), selected = 1),
-                         selectInput("bolatexto", label = NULL, choices = list("Mostrar Bolas y Etiquetas" = 1, "Mostrar Solo Etiquetas" = 2, "Mostrar Solo Bolas" = 3), selected = 1),
+                         selectInput("tema", label = NULL, choices = list("Tema Gris" = 1, "Tema Claro" = 2, "Tema Blanco" = 3), selected = 1),
+                         selectInput("bolatexto", label = NULL, choices = list("Mostrar Bolas y Etiquetas" = 1, "Mostrar Solo Etiquetas" = 2, "Mostrar Solo Bolas" = 3), selected = 2),
                          sliderInput("aspecto", label ="Ratio de Aspecto", min = 1, max = 10, value = 5),
-                         checkboxInput("contribucion", label = "Mostrar Contribuciones", value = TRUE)
+                         checkboxInput("contribucion", label = "Mostrar Contribuciones", value = FALSE)
                        ),
                        
                        box(
@@ -51,8 +50,8 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
-                         sliderInput("tm_texto", label ="Etiquetas", min = 10, max = 100, value = 40),
-                         sliderInput("tm_bola", label ="Bolas", min = 10, max = 100, value = 20)
+                         sliderInput("tm_texto", label ="Etiquetas", min = 10, max = 100, value = 50),
+                         sliderInput("tm_bola", label ="Bolas", min = 10, max = 100, value = 30)
                        ),
                        
                        box(
