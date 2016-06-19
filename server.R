@@ -91,5 +91,70 @@ function(input, output) {
     datglobal$grafico <- grafico
 
   })
+  
+  output$mapaxy <- renderPlot({
+
+    etiqueta <- paste("Etiqueta",1:12)
+    x <- runif(1:12) * 100
+    y <- runif(1:12) * 100
+    dimension <- rep(c("Caso1","Caso2","Caso3"),4)
+    datos <- data.frame(etiqueta, x, y, dimension)
+    
+    inFile2 <- input$file2
+    tipo2 <- inFile2$type 
+    
+    if (!is.null(inFile2)) {
+      if(tipo2 == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+        file.rename(inFile2$datapath, paste(inFile2$datapath, ".xlsx", sep=""))
+        datos <- as.data.frame(read_excel(paste(inFile2$datapath, ".xlsx", sep=""), 1))
+      } 
+      else {
+        file.rename(inFile2$datapath, paste(inFile2$datapath, ".xls", sep=""))
+        datos <- as.data.frame(read_excel(paste(inFile2$datapath, ".xls", sep=""), 1))
+      }
+    }
+    
+    grafico <- datos
+    etiquetax <- names(grafico)[2]
+    etiquetay <- names(grafico)[3]
+    names(grafico) <- c("etiqueta","x","y","dimension")
+    
+    colorlinea <- ifelse(input$lineabt2==TRUE,"gray","transparent")
+    
+    mapacor <- ggplot(grafico, aes(x, y, label=etiqueta)) +
+      theme(axis.title.y = element_text(size = 12, angle = 90))
+    
+    if (input$tema2 == 1) {mapacor <- mapacor + theme_gray()}
+    if (input$tema2 == 2) {mapacor <- mapacor + theme_bw() + theme(panel.border = element_rect(fill = NA, colour = "lightgray", size = 0.5))}
+    if (input$tema2 == 3) {mapacor <- mapacor + theme_bw() + theme(panel.grid.major = element_blank(), panel.border = element_rect(fill = NA, colour = "white", size = 0.5)) +theme(panel.grid.minor = element_blank())}
+    
+    if (input$enetiqueta2 == TRUE) {
+      if (input$bolatexto2 == 3) {mapacor <- mapacor + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
+      if (input$bolatexto2 == 2 && input$relleno2== TRUE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white", aes(fill = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1 && input$relleno2== TRUE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white",aes(fill = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
+      if (input$bolatexto2 == 2 && input$relleno2== FALSE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"),aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1 && input$relleno2== FALSE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
+    }
+    
+    if (input$enetiqueta2 == FALSE) {
+      if (input$bolatexto2 == 3) {mapacor <- mapacor + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
+      if (input$bolatexto2 == 2) {mapacor <- mapacor + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1) {mapacor <- mapacor + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "gray", alpha=0.5)}
+    }
+    
+    mapacor <- mapacor + 
+      theme(axis.text.x = element_blank()) + 
+      theme(axis.text.y = element_blank()) +
+      theme(axis.ticks.x = element_blank()) +
+      theme(axis.ticks.y = element_blank()) +
+      theme(aspect.ratio=2.5/input$aspecto2) +
+      theme(axis.title.x = element_text(size=12,face="plain")) +
+      theme(axis.title.y = element_text(size=12, face="plain"))
+    
+    print(mapacor)
+    
+    datglobal$grafico <- grafico
+    
+  })
     
 }

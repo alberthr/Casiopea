@@ -27,7 +27,7 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = FALSE,
-                         fileInput('file1', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
+                         fileInput('file', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
                        ),
                        
                        box(
@@ -112,8 +112,9 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
-                         selectInput("tema2", label = NULL, choices = list("Tema Gris" = 1, "Tema Claro" = 2, "Solo Grafico en Blanco" = 3), selected = 1),
-                         selectInput("bolatexto2", label = NULL, choices = list("Mostrar Bolas y Etiquetas" = 1, "Mostrar Solo Etiquetas" = 2, "Mostrar Solo Bolas" = 3), selected = 1)
+                         selectInput("tema2", label = NULL, choices = list("Tema Gris" = 1, "Tema Claro" = 2, "Tema Blanco" = 3), selected = 1),
+                         selectInput("bolatexto2", label = NULL, choices = list("Mostrar Bolas y Etiquetas" = 1, "Mostrar Solo Etiquetas" = 2, "Mostrar Solo Bolas" = 3), selected = 2),
+                         sliderInput("aspecto2", label ="Ratio de Aspecto", min = 1, max = 10, value = 5)
                        ),
                        
                        box(
@@ -123,8 +124,8 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
-                         sliderInput("tm_texto2", label ="Etiquetas", min = 10, max = 100, value = 40),
-                         sliderInput("tm_bola2", label ="Bolas", min = 10, max = 100, value = 20)
+                         sliderInput("tm_texto2", label ="Etiquetas", min = 10, max = 100, value = 50),
+                         sliderInput("tm_bola2", label ="Bolas", min = 10, max = 100, value = 30)
                        ),
                        
                        box(
@@ -134,31 +135,30 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = TRUE,
-                         checkboxInput("lineabt", label = "Linea Bola-Texto", value = TRUE),
+                         checkboxInput("lineabt2", label = "Linea Bola-Texto", value = TRUE),
                          checkboxInput("enetiqueta2", label = "Envolver Texto", value = FALSE),
+                         checkboxInput("relleno2", label = "Color de Relleno", value = FALSE),
                          sliderInput("separacion2", label ="Fuerza de Separacion", min = 0, max = 100, value = 25)
                        ),
                        
                        box(
                          title = "Colores", 
                          width = NULL,
-                         status = "primary", 
+                         status = "primary",
                          solidHeader = TRUE,
                          collapsible = TRUE,
-                         collapsed = TRUE,
-                         colourInput("col3", "Colores", value = "#D11919", showColour = "background"),
-                         colourInput("col4", label=NULL, value = "#676767", showColour = "background")
+                         collapsed = TRUE
                        )
                 ),
                 
                 column(width = 9,
                        box(
-                         title = "Mapa de Correspondencias", 
+                         title = "Mapa XY", 
                          width = NULL,
                          status = "primary", 
                          solidHeader = TRUE,
                          collapsible = FALSE,
-                         plotOutput("mapaxy", height=550)
+                         plotOutput("mapaxy", height=500)
                        )
                 )
               )
