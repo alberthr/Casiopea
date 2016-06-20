@@ -93,7 +93,7 @@ function(input, output) {
   })
   
   output$mapaxy <- renderPlot({
-
+    
     etiqueta <- paste("Etiqueta",1:12)
     x <- runif(1:12) * 100
     y <- runif(1:12) * 100
@@ -121,37 +121,48 @@ function(input, output) {
     
     colorlinea <- ifelse(input$lineabt2==TRUE,"gray","transparent")
     
-    mapacor <- ggplot(grafico, aes(x, y, label=etiqueta)) +
-      theme(axis.title.y = element_text(size = 12, angle = 90))
+    mapaxy <- ggplot(grafico, aes(x, y, label=etiqueta)) 
     
-    if (input$tema2 == 1) {mapacor <- mapacor + theme_gray()}
-    if (input$tema2 == 2) {mapacor <- mapacor + theme_bw() + theme(panel.border = element_rect(fill = NA, colour = "lightgray", size = 0.5))}
-    if (input$tema2 == 3) {mapacor <- mapacor + theme_bw() + theme(panel.grid.major = element_blank(), panel.border = element_rect(fill = NA, colour = "white", size = 0.5)) +theme(panel.grid.minor = element_blank())}
+    if (input$xypromedio == TRUE) {mapaxy <- mapaxy + geom_hline(yintercept=mean(grafico$y), color="darkgrey") + geom_vline(xintercept=mean(grafico$x), color="darkgrey") }
+    
+    if (input$tema2 == 1) {mapaxy <- mapaxy + theme_gray()}
+    if (input$tema2 == 2) {mapaxy <- mapaxy + theme_bw() + theme(panel.border = element_rect(fill = NA, colour = "lightgray", size = 0.5))}
+    if (input$tema2 == 3) {mapaxy <- mapaxy + theme_bw() + theme(panel.grid.major = element_blank(), panel.border = element_rect(fill = NA, colour = "white", size = 0.5)) +theme(panel.grid.minor = element_blank())}
     
     if (input$enetiqueta2 == TRUE) {
-      if (input$bolatexto2 == 3) {mapacor <- mapacor + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
-      if (input$bolatexto2 == 2 && input$relleno2== TRUE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white", aes(fill = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
-      if (input$bolatexto2 == 1 && input$relleno2== TRUE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white",aes(fill = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
-      if (input$bolatexto2 == 2 && input$relleno2== FALSE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"),aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
-      if (input$bolatexto2 == 1 && input$relleno2== FALSE) {mapacor <- mapacor + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
+      if (input$bolatexto2 == 3) {mapaxy <- mapaxy + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
+      if (input$bolatexto2 == 2 && input$relleno2== TRUE) {mapaxy <- mapaxy + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white", aes(fill = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1 && input$relleno2== TRUE) {mapaxy <- mapaxy + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), colour="white",aes(fill = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
+      if (input$bolatexto2 == 2 && input$relleno2== FALSE) {mapaxy <- mapaxy + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"),aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1 && input$relleno2== FALSE) {mapaxy <- mapaxy + geom_label_repel(size=(input$tm_texto2)/10, box.padding = unit(0.25, "lines"), aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "darkgray", alpha=0.75)}
     }
     
     if (input$enetiqueta2 == FALSE) {
-      if (input$bolatexto2 == 3) {mapacor <- mapacor + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
-      if (input$bolatexto2 == 2) {mapacor <- mapacor + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
-      if (input$bolatexto2 == 1) {mapacor <- mapacor + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "gray", alpha=0.5)}
+      if (input$bolatexto2 == 3) {mapaxy <- mapaxy + geom_point(size=(input$tm_bola2)/10, aes(colour = dimension), alpha=0.5)}
+      if (input$bolatexto2 == 2) {mapaxy <- mapaxy + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0, 'lines'), segment.color="transparent", force = (input$separacion2/5), max.iter = 2e3)}
+      if (input$bolatexto2 == 1) {mapaxy <- mapaxy + geom_text_repel(size=(input$tm_texto2)/10, aes(colour = dimension), point.padding = unit(0.5, 'lines'), segment.color=colorlinea, force = (input$separacion2/5), max.iter = 2e3) + geom_point(size=(input$tm_bola2)/10, colour = "gray", alpha=0.5)}
     }
     
-    mapacor <- mapacor + 
-      theme(axis.text.x = element_blank()) + 
-      theme(axis.text.y = element_blank()) +
+    mapaxy <- mapaxy + 
       theme(axis.ticks.x = element_blank()) +
       theme(axis.ticks.y = element_blank()) +
       theme(aspect.ratio=2.5/input$aspecto2) +
       theme(axis.title.x = element_text(size=12,face="plain")) +
-      theme(axis.title.y = element_text(size=12, face="plain"))
+      theme(axis.title.y = element_text(size=12, face="plain")) +
+      theme(legend.title=element_blank())
     
-    print(mapacor)
+    if (input$mostrarejexy == FALSE) { mapaxy <- mapaxy + theme(axis.title.y = element_blank()) + theme(axis.title.x = element_blank())}
+    else {
+      if (input$ejex == "") {mapaxy <- mapaxy + xlab(etiquetax)} 
+      else {mapaxy <- mapaxy + xlab(input$ejex)}
+      
+      if (input$ejey == "") {mapaxy <- mapaxy + ylab(etiquetay)} 
+      else {mapaxy <- mapaxy + ylab(input$ejey)}
+    }
+
+    if (input$xygraduacion == FALSE) { mapaxy <- mapaxy + theme(axis.text.y = element_blank()) + theme(axis.text.x = element_blank())}
+        
+    print(mapaxy)
     
     datglobal$grafico <- grafico
     

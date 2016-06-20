@@ -3,7 +3,7 @@ library(shinydashboard)
 library(shinyjs)
 
 dashboardPage(#skin = "red",
-  dashboardHeader(title = "CASIOPEA"),
+  dashboardHeader(title = "Casiopea"),
   
   ## Sidebar content
   dashboardSidebar(
@@ -13,7 +13,7 @@ dashboardPage(#skin = "red",
     )
   ),
   
-  dashboardBody(
+  dashboardBody(tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
     tabItems(
 
       # TAB MAPA DE CORRESPONDENCIAS
@@ -27,7 +27,7 @@ dashboardPage(#skin = "red",
                          solidHeader = TRUE,
                          collapsible = TRUE,
                          collapsed = FALSE,
-                         fileInput('file', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
+                         fileInput('file1', 'Importar Fichero de datos',accept=c(".xls",".xlsx"))
                        ),
                        
                        box(
@@ -142,12 +142,17 @@ dashboardPage(#skin = "red",
                        ),
                        
                        box(
-                         title = "Colores", 
+                         title = "Ejes", 
                          width = NULL,
                          status = "primary",
                          solidHeader = TRUE,
                          collapsible = TRUE,
-                         collapsed = TRUE
+                         collapsed = TRUE,
+                         checkboxInput("xypromedio", label = "Mostrar Lineas Promedio", value = TRUE),
+                         checkboxInput("xygraduacion", label = "Mostrar Graduacion del Eje", value = TRUE),
+                         checkboxInput("mostrarejexy", label = "Mostrar Etiquetas Ejes XY", value = TRUE),
+                         textInput("ejex", label = "Eje X", value = ""),
+                         textInput("ejey", label = "Eje Y", value = "")
                        )
                 ),
                 
