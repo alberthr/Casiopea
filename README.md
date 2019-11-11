@@ -1,5 +1,5 @@
 # Casiopea
-Programa para hacer graficos en Shiny. Contiene 2 modulos:
+Programa para hacer graficos en Shiny. Es la continuación del proyecto iniciado con CAPlot. Contiene 2 modulos:
 + Modulo para hacer Mapas de Correspondencias
 + Modulo para graficar mapas XY
 
