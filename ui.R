@@ -1,6 +1,7 @@
 ## ui.R ##
 library(shinydashboard)
 library(shinyjs)
+library(colourpicker)
 
 dashboardPage(#skin = "red",
   dashboardHeader(title = "Casiopea"),
